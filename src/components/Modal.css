@@ -1,0 +1,118 @@
+.splash-screen {
+  position: fixed;
+  inset: 0; 
+  background: linear-gradient(135deg, #f9d949, #fff5cc);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  z-index: 100;
+}
+
+.splash-screen h1,
+.splash-screen p {
+  text-align: center;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s ease-out forwards;
+}
+
+.splash-screen h1 {
+  animation-delay: 0.2s;
+}
+
+.splash-screen p {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Box */
+.modal-content {
+  background: #fff3b0;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: #4b3f2f;
+  border: 2px solid #f9d949;
+  animation: popUp 0.3s ease forwards;
+}
+
+
+/* Modal Heading */
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+  text-shadow: 0 1px 0 #fff;
+}
+
+/* Button Styling */
+.modal-content button {
+  padding: 12px 28px;
+  border: none;
+  background-color: #f9d949;
+  color: #111;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(249, 217, 73, 0.4);
+}
+
+.modal-content button:hover {
+  background-color: #ffe873;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(249, 217, 73, 0.6);
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  margin-top: 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

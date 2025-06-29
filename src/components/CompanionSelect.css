@@ -1,0 +1,207 @@
+/* CSS Variables for theme colors */
+:root {
+  --primary-yellow: #f9d949;
+  --primary-yellow-hover: #f7c400;
+  --primary-border: #f9d949;
+  --primary-bg: #fffbe6;
+  --primary-shadow: rgba(249, 217, 73, 0.7);
+  --disabled-bg: #ddd;
+}
+
+.companion-select {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--primary-bg);
+  border: 2px solid var(--primary-border);
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 40px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.companion-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.companion-card {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  width: 120px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  position: relative;
+}
+
+.companion-card:hover,
+.companion-card:focus {
+  transform: scale(1.05);
+  border-color: var(--primary-border);
+  outline: none;
+}
+
+.companion-card.selected {
+  border-color: var(--primary-border);
+  box-shadow: 0 0 10px var(--primary-shadow);
+}
+
+.companion-card img {
+  width: 80px;
+  height: 80px;
+}
+
+.tooltip-container {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 10;
+  will-change: opacity;
+}
+
+.tooltip-container:hover .tooltip-text,
+.tooltip-container:focus-within .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--primary-yellow);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s, opacity 0.2s;
+  outline: none;
+}
+
+button:focus {
+  box-shadow: 0 0 0 2px var(--primary-yellow-hover);
+}
+
+button:disabled {
+  background-color: var(--disabled-bg);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+button:not(:disabled):hover,
+button:not(:disabled):focus {
+  background-color: var(--primary-yellow-hover);
+}
+
+@media (max-width: 900px) {
+  .companion-select {
+    max-width: 98vw;
+    margin: 16px auto;
+    padding: 10px;
+  }
+  .companion-grid {
+    gap: 10px;
+  }
+  .companion-card {
+    width: 90px;
+    padding: 6px;
+  }
+  .companion-card img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 600px), (max-height: 500px) {
+  .companion-select {
+    max-width: 100vw;
+    margin: 4px auto;
+    padding: 4px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .companion-grid {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .companion-card {
+    width: 60px;
+    padding: 2px;
+    font-size: 12px;
+  }
+  .companion-card img {
+    width: 36px;
+    height: 36px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  button {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 10px;
+  }
+  .tooltip-text {
+    width: 90vw;
+    font-size: 0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 3px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+  .companion-select {
+    max-width: 100vw;
+    margin: 2px auto;
+    padding: 2px;
+  }
+  .companion-grid {
+    gap: 2px;
+  }
+  .companion-card {
+    width: 50px;
+    padding: 1px;
+    font-size: 10px;
+  }
+  .companion-card img {
+    width: 28px;
+    height: 28px;
+  }
+  h2 {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  button {
+    font-size: 11px;
+    padding: 5px 7px;
+    margin-top: 6px;
+  }
+  .tooltip-text {
+    width: 80vw;
+    font-size: 0.7rem;
+    padding: 2px;
+  }
+}
