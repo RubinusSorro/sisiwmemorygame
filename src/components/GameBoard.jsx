@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SingleCard from './SingleCard';
 import './GameBoard.css';
-import PowerCardZone from './powercardzone';
+import PowerCardZone from './PowerCardZone';
 import strikerIcon from '../assets/strikersisiw.png';
 import blockerIcon from '../assets/defendersisiw.png';
 import healerIcon from '../assets/healersisiw.png';
