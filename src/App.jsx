@@ -17,7 +17,7 @@ import violet from './assets/violet.png';
 import yellowsisiw from './assets/yellowsisiw.png';
 import cheaterSisiw from './assets/cheatersisiw.png';
 import ictSisiw from './assets/ictsisiw.png';
-import seducerSisiw from './assets/seducersisiw.png';
+import charmSisiw from './assets/charmsisiw.png';
 import cursedSisiw from './assets/cursedsisiw.png';
 import clickSound from './assets/clicksound.wav';
 import bossLaughSound from './assets/bosslaughsound.mp3';
@@ -80,6 +80,7 @@ function App() {
   const [showBossDialogue, setShowBossDialogue] = useState(false); // Show Cheater Sisiw dialogue
   const [showBossTaunt, setShowBossTaunt] = useState(false); // Show taunt after boss intro
   const [showPreview, setShowPreview] = useState(false);
+  const [activePowerAnimation, setActivePowerAnimation] = useState(null); // Track active power animation
 
   // --- Companion Ability State ---
   const [ictUndoAvailable, setIctUndoAvailable] = useState(false);
@@ -156,6 +157,10 @@ function App() {
     setShowBossTurn(false);
     setScannerActive(false);
     setGameStarted(true);
+    setUndoGlitchUsed(false); // Reset ICT Sisiw usage
+    setUndoGlitchSnapshot(null); // Reset snapshot
+    setIctUndoAvailable(false); // Reset undo availability
+    setLastWrongPair(null); // Reset last wrong pair
   };
 
   const startGame = (mode) => {
@@ -184,7 +189,9 @@ function App() {
     if (usedPowerCards[type]) return;
     setUsedPowerCards(prev => ({ ...prev, [type]: true }));
     setPowerEffect(type); // Show icon
+    setActivePowerAnimation(type); // Trigger animation overlay
     setTimeout(() => setPowerEffect(null), 1000); // Hide after 1s
+    setTimeout(() => setActivePowerAnimation(null), 1000); // Hide animation after 1s
 
     if (type === 'striker') setCheaterProgress(prev => Math.min(prev + 20, 100));
     if (type === 'defender') setBlockNextDamage(true);
@@ -238,8 +245,8 @@ function App() {
     if (type === 'ict' && !undoGlitchUsed) {
       useUndoGlitch();
     }
-    // Seducer Sisiw: Skip boss turn
-    if (type === 'seducer') {
+    // Charm Sisiw: Skip boss turn
+    if (type === 'charm') {
       setSeducerSkipBoss(true);
     }
     // Cursed Sisiw: Select a card to curse (for demo, curse first unmatched card)
@@ -270,6 +277,9 @@ function App() {
   // --- ICT Sisiw 'Undo Glitch' ability ---
   function useUndoGlitch() {
     if (undoGlitchUsed || !undoGlitchSnapshot) return;
+    // Only allow undo if the last move was a wrong match and it's immediately after that move
+    // (i.e., ictUndoAvailable is true)
+    if (!ictUndoAvailable) return;
     // Restore health and turn count
     setPlayerHealth(undoGlitchSnapshot.prevHealth);
     setTurns(undoGlitchSnapshot.prevTurns);
@@ -604,35 +614,50 @@ function App() {
       )}
       {showInstructions && (
         <Modal onClose={() => setShowInstructions(false)}>
-          <h2>How to Play</h2>
-          <p><strong>General:</strong> Match all pairs of cards to win. Click two cards to reveal them. If they match, they stay revealed. If not, they flip back. Use as few turns and as little time as possible!</p>
-          <h3>Game Modes</h3>
-          <ul style={{textAlign: 'left', maxWidth: 600, margin: '0 auto'}}>
-            <li><strong>Classic:</strong> No time or turn limit. Relax and match all pairs at your own pace.</li>
-            <li><strong>Timed:</strong> Match all pairs within 60 seconds. If the timer runs out, you lose!</li>
-            <li><strong>Limited:</strong> You have 30 turns to match all pairs. If you run out of turns, you lose!</li>
-            <li><strong>Boss Mode:</strong> Face off against Cheater Sisiw! Both you and the boss take turns. The boss can damage your health if it finds a match. Use companions and power cards for special abilities:
-              <ul>
-                <li><strong>Striker:</strong> Damages the boss.</li>
-                <li><strong>Defender:</strong> Blocks the next damage from the boss.</li>
-                <li><strong>Healer:</strong> Restores your health.</li>
-                <li><strong>Lucky:</strong> Instantly matches a random pair.</li>
-                <li><strong>Scanner:</strong> Reveals a matching pair for you.</li>
-                <li><strong>Reviver:</strong> Revives you with 50% health if you reach 0.</li>
-              </ul>
-              Defeat the boss by matching cards and using your powers wisely before your health runs out!
-            </li>
-          </ul>
-          <h3>Tips</h3>
-          <ul style={{textAlign: 'left', maxWidth: 600, margin: '0 auto'}}>
-            <li>Use the Peek button (once per game) to briefly reveal all cards.</li>
-            <li>Try to remember card positions for efficient matching.</li>
-            <li>In Boss Mode, choose companions that fit your play style!</li>
-          </ul>
+          <div style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: 12 }}>
+            <h2>How to Play</h2>
+            <p><strong>General:</strong> Match all pairs of cards to win. Click two cards to reveal them. If they match, they stay revealed. If not, they flip back. Use as few turns and as little time as possible!</p>
+            <h3>Game Modes</h3>
+            <ul style={{textAlign: 'left', maxWidth: 600, margin: '0 auto'}}>
+              <li><strong>Classic:</strong> No time or turn limit. Relax and match all pairs at your own pace.</li>
+              <li><strong>Timed:</strong> Match all pairs within 60 seconds. If the timer runs out, you lose!</li>
+              <li><strong>Limited:</strong> You have 30 turns to match all pairs. If you run out of turns, you lose!</li>
+              <li><strong>Boss Mode:</strong> Face off against Cheater Sisiw! Both you and the boss take turns. The boss can damage your health if it finds a match. Use companions and power cards for special abilities:
+                <ul>
+                  <li><strong>Striker Sisiw:</strong> Deal 20% damage to the boss instantly.</li>
+                  <li><strong>Defender Sisiw:</strong> Block the next damage you would take from the boss.</li>
+                  <li><strong>Healer Sisiw:</strong> Restore 30% of your health.</li>
+                  <li><strong>Lucky Sisiw:</strong> Instantly match a random pair of cards for free damage to the boss.</li>
+                  <li><strong>Scanner Sisiw:</strong> Reveal a matching pair for you (you must still match them to damage the boss).</li>
+                  <li><strong>Reviver Sisiw:</strong> If you reach 0 health, revive with 50% health (must be used before dying).</li>
+                  <li><strong>ICT Sisiw:</strong> Undo your last wrong match, restoring lost health and turns (once per game, only after a mistake).</li>
+                  <li><strong>Charm Sisiw:</strong> Skip the boss's next turn (once per game).</li>
+                  <li><strong>Cursed Sisiw:</strong> Curse a card; if the boss draws it on their turn, they take 15% damage and the curse is removed (once per game).</li>
+                </ul>
+                Defeat the boss by matching cards and using your powers wisely before your health runs out!
+              </li>
+            </ul>
+            <h3>Tips</h3>
+            <ul style={{textAlign: 'left', maxWidth: 600, margin: '0 auto'}}>
+              <li>Use the Peek button (once per game) to briefly reveal all cards.</li>
+              <li>Try to remember card positions for efficient matching.</li>
+              <li>In Boss Mode, choose companions that fit your play style! Each companion has a unique power—read their tooltips for details.</li>
+            </ul>
+          </div>
         </Modal>
       )}
-      {glitchActive && (
-        <div className="glitch-overlay">UNDO GLITCH!</div>
+      {activePowerAnimation && (
+        <div className={`power-overlay power-${activePowerAnimation}`}>
+          {activePowerAnimation === 'striker' && <span>STRIKER POWER!</span>}
+          {activePowerAnimation === 'defender' && <span>DEFENDER POWER!</span>}
+          {activePowerAnimation === 'healer' && <span>HEALER POWER!</span>}
+          {activePowerAnimation === 'lucky' && <span>LUCKY POWER!</span>}
+          {activePowerAnimation === 'scanner' && <span>SCANNER POWER!</span>}
+          {activePowerAnimation === 'reviver' && <span>REVIVER POWER!</span>}
+          {activePowerAnimation === 'ict' && <span>UNDO GLITCH!</span>}
+          {activePowerAnimation === 'charm' && <span>CHARM POWER!</span>}
+          {activePowerAnimation === 'cursed' && <span>CURSED POWER!</span>}
+        </div>
       )}
     </div>
   );

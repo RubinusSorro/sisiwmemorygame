@@ -154,6 +154,40 @@ button:hover {
     0 -2px #00fff9;
 }
 
+.power-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  animation: power-anim 0.8s linear;
+  text-shadow:
+    2px 0 #ff00c8,
+    -2px 0 #00fff9,
+    0 2px #ff00c8,
+    0 -2px #00fff9;
+}
+
+/* Unique color for each power */
+.power-striker span { color: #ff3c00; text-shadow: 2px 2px 8px #fff, 0 0 16px #ff3c00; }
+.power-defender span { color: #00bfff; text-shadow: 2px 2px 8px #fff, 0 0 16px #00bfff; }
+.power-healer span { color: #00e676; text-shadow: 2px 2px 8px #fff, 0 0 16px #00e676; }
+.power-lucky span { color: #ffe600; text-shadow: 2px 2px 8px #fff, 0 0 16px #ffe600; }
+.power-scanner span { color: #a259ff; text-shadow: 2px 2px 8px #fff, 0 0 16px #a259ff; }
+.power-reviver span { color: #ff1744; text-shadow: 2px 2px 8px #fff, 0 0 16px #ff1744; }
+.power-ict span { color: #00fff9; text-shadow: 2px 2px 8px #fff, 0 0 16px #00fff9; }
+.power-charm span { color: #ff69b4; text-shadow: 2px 2px 8px #fff, 0 0 16px #ff69b4; }
+.power-cursed span { color: #b22222; text-shadow: 2px 2px 8px #fff, 0 0 16px #b22222; }
+
 @keyframes glitch-anim {
   0% { transform: translate(0, 0); opacity: 1; }
   10% { transform: translate(-5px, 2px) skewX(-5deg); }
@@ -165,6 +199,20 @@ button:hover {
   70% { transform: translate(2px, -2px) skewY(2deg); }
   80% { opacity: 1; }
   90% { transform: translate(0, 0) skewX(0deg) skewY(0deg); }
+  100% { opacity: 0; }
+}
+
+@keyframes power-anim {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  10% { transform: scale(1.05) rotate(-2deg); }
+  20% { transform: scale(1.1) rotate(2deg); }
+  30% { transform: scale(1.08) rotate(-1deg); }
+  40% { transform: scale(1.12) rotate(1deg); }
+  50% { opacity: 0.95; }
+  60% { transform: scale(1.1) rotate(-2deg); }
+  70% { transform: scale(1.05) rotate(2deg); }
+  80% { opacity: 1; }
+  90% { transform: scale(1) rotate(0deg); }
   100% { opacity: 0; }
 }
 

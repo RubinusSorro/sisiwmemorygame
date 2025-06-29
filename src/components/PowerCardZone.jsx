@@ -6,7 +6,7 @@ import luckyIcon from '../assets/luckysisiw.png';
 import scannerIcon from '../assets/scannersisiw.png';
 import reviverIcon from '../assets/reviversisiw.png';
 import ictIcon from '../assets/ictsisiw.png';
-import seducerIcon from '../assets/seducersisiw.png';
+import charmIcon from '../assets/charmsisiw.png';
 import cursedIcon from '../assets/cursedsisiw.png';
 
 export default function PowerCardZone({
@@ -18,7 +18,7 @@ export default function PowerCardZone({
   onUseScanner,
   onUseReviver,
   onUseICT,
-  onUseSeducer,
+  onUseCharm,
   onUseCursed,
   usedStriker,
   usedDefender,
@@ -27,7 +27,7 @@ export default function PowerCardZone({
   usedScanner,
   usedReviver,
   usedICT,
-  usedSeducer,
+  usedCharm,
   usedCursed
 }) {
   const companionData = {
@@ -73,10 +73,10 @@ export default function PowerCardZone({
       onUse: onUseICT,
       tooltip: "Undo your last wrong match (once per game)"
     },
-    "Seducer Sisiw": {
-      icon: seducerIcon,
-      used: usedSeducer,
-      onUse: onUseSeducer,
+    "Charm Sisiw": {
+      icon: charmIcon,
+      used: usedCharm,
+      onUse: onUseCharm,
       tooltip: "Skip the boss's next turn (once per game)"
     },
     "Cursed Sisiw": {

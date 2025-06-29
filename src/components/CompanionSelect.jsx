@@ -7,7 +7,7 @@ import luckyIcon from '../assets/luckysisiw.png';
 import scannerIcon from '../assets/scannersisiw.png';
 import reviverIcon from '../assets/reviversisiw.png';
 import ictIcon from '../assets/ictsisiw.png';
-import seducerIcon from '../assets/seducersisiw.png';
+import charmIcon from '../assets/charmsisiw.png';
 import cursedIcon from '../assets/cursedsisiw.png';
 
 export default function CompanionSelect({ onConfirm }) {
@@ -21,7 +21,7 @@ export default function CompanionSelect({ onConfirm }) {
     { id: 5, name: "Scanner Sisiw", image: scannerIcon, description: "Reveals two matching cards — but you must match them manually for boss damage to count" },
     { id: 6, name: "Reviver Sisiw", image: reviverIcon, description: "Revives you to 50% health if used before dying at low health" },
     { id: 7, name: "ICT Sisiw", image: ictIcon, description: "Undo your last wrong match (once per game)" },
-    { id: 8, name: "Seducer Sisiw", image: seducerIcon, description: "Skip the boss's next turn (once per game)" },
+    { id: 8, name: "Charm Sisiw", image: charmIcon, description: "Skip the boss's next turn (once per game)" },
     { id: 9, name: "Cursed Sisiw", image: cursedIcon, description: "Curse a card: if the boss draws it, they take 20% damage (once per game)" },
   ];
 

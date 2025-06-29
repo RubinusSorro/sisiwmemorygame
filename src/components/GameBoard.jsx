@@ -173,7 +173,7 @@ export default function GameBoard({
             onUseScanner={() => onUsePowerCard('scanner')}
             onUseReviver={() => onUsePowerCard('reviver')}
             onUseICT={() => onUsePowerCard('ict')}
-            onUseSeducer={() => onUsePowerCard('seducer')}
+            onUseCharm={() => onUsePowerCard('charm')}
             onUseCursed={() => onUsePowerCard('cursed')}
             usedStriker={powerCards.striker}
             usedDefender={powerCards.blocker}
@@ -182,7 +182,7 @@ export default function GameBoard({
             usedScanner={powerCards.scanner}
             usedReviver={powerCards.reviver}
             usedICT={powerCards.ict}
-            usedSeducer={powerCards.seducer}
+            usedCharm={powerCards.charm}
             usedCursed={powerCards.cursed}
           />
         </div>
