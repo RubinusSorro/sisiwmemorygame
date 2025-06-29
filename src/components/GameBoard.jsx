@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SingleCard from './SingleCard';
 import './GameBoard.css';
-import PowerCardZone from './PowerCardZone';
+import PowerCardZone from './powercardzone';
 import strikerIcon from '../assets/strikersisiw.png';
 import blockerIcon from '../assets/defendersisiw.png';
 import healerIcon from '../assets/healersisiw.png';
@@ -39,6 +39,25 @@ export default function GameBoard({
 }) {
   const remainingHealth = 100 - cheaterProgress;
 
+  // --- Orientation Overlay Logic ---
+  const [showRotate, setShowRotate] = useState(false);
+  useEffect(() => {
+    function checkOrientation() {
+      if (window.innerWidth < 700 && window.innerHeight > window.innerWidth) {
+        setShowRotate(true);
+      } else {
+        setShowRotate(false);
+      }
+    }
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
+
   // Helper to get icon and label for each power
   const getPowerEffectIcon = (effect) => {
     switch (effect) {
@@ -62,6 +81,16 @@ export default function GameBoard({
 
   return (
     <div className="game-board">
+      {showRotate && (
+        <div className="rotate-overlay">
+          <div className="rotate-message">
+            <span style={{fontSize: '2.2rem', fontWeight: 'bold'}}>🔄 Please rotate your device</span>
+            <br />
+            <span style={{fontSize: '1.2rem'}}>This game is best played in landscape mode.</span>
+          </div>
+        </div>
+      )}
+
       {/* Show power effect icon if active */}
       {effect && (
         <div className="power-effect-popup">
