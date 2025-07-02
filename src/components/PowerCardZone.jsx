@@ -1,4 +1,4 @@
-import './powercardzone.css';
+import './PowerCardZone.css';
 import strikerIcon from '../assets/strikersisiw.png';
 import defenderIcon from '../assets/defendersisiw.png';
 import healerIcon from '../assets/healersisiw.png';
